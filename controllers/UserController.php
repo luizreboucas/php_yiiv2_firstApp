@@ -10,24 +10,12 @@ use yii\web\Response;
 
     class UserController extends Controller
     {
-        function behaviors()
-        {
-
-            return [
-                'verbs'=>[
-                    'class'=> VerbFilter::class,
-                    'actions'=>[
-                        'update-user'=>['put']
-                    ]
-                ]
-                    ];
-        }
 
         function beforeAction($action)
         {
-            if($action->id == 'create-user'){
-                $this->enableCsrfValidation = false;
-            }
+            
+            $this->enableCsrfValidation = false;
+            
 
             return parent::beforeAction($action);
         }
@@ -59,7 +47,7 @@ use yii\web\Response;
             return $user;
         }
 
-        function actionUpdate($id)
+        function actionUpdateUser($id)
         {
             return 'hello';
             $user = User::findOne($id);
@@ -74,5 +62,17 @@ use yii\web\Response;
             $user->save();
             Yii::$app->response->format = Response::FORMAT_JSON;
             return $user;
+        }
+
+        function actionDeleteUser($id)
+        {
+
+            $user = User::findOne($id);
+            $user->delete();
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                'message' => 'Usuário deletado',
+                'usuário deletado' => $user
+            ];
         }
     }
