@@ -49,10 +49,10 @@ use yii\web\Response;
 
         function actionUpdateUser($id)
         {
-            return 'hello';
+            
             $user = User::findOne($id);
             $bodyParamsJson = file_get_contents('php://input');
-            $body = json_decode($bodyParamsJson);
+            $body = json_decode($bodyParamsJson, true);
             if(isset($body['name'])){
                 $user->name = $body['name'];
             }
